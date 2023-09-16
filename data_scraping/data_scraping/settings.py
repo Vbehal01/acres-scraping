@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     'core',
-    'django_crontab'
+    'django_crontab',
+    'data_scraping'
 ]
-
-import logging
 
 LOGGING = {
     'version': 1,
@@ -79,7 +78,7 @@ LOGGING = {
 }
 
 CRONJOBS = [
-    ('*/1 * * * *', 'core.cron.my_cron_job') #This cron run every minute
+    ('* * * * *', 'core.cron.my_cron_job') #This cron run every minute
 ]
 
 MIDDLEWARE = [
@@ -117,11 +116,11 @@ WSGI_APPLICATION = "data_scraping.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+       'default': {
+           'ENGINE': 'djongo',
+           'NAME': 'db-name',
+       }
+   }
 
 
 # Password validation
