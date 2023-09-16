@@ -115,12 +115,12 @@ WSGI_APPLICATION = "data_scraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-       'default': {
-           'ENGINE': 'djongo',
-           'NAME': 'db-name',
-       }
-   }
+# DATABASES = {
+#        'default': {
+#            'ENGINE': 'djongo',
+#            'NAME': 'db-name',
+#        }
+#    }
 
 
 # Password validation
