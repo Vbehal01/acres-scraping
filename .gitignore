@@ -1,4 +1,5 @@
 *vansh-django*
 *django*
-__pycache__
+__pycache__/
+**.pyc
 mongodb-data
