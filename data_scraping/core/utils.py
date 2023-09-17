@@ -9,3 +9,8 @@ class Property(Document):
     locality = StringField(max_length=50)
     city = StringField(max_length=50)
     link=StringField(max_length=200)
+
+class Record(Document):
+    total_data_scrapped= IntField()
+    already_inserted_data= IntField()
+    new_inserted_data= IntField()
