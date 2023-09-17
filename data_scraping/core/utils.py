@@ -1,10 +1,11 @@
 from mongoengine import *
 connect()
 
-class property(Document):
-    Name = StringField(required=True)
-    Cost = StringField(max_length=50)
-    Type = StringField(max_length=50)
-    Area = StringField(max_length=50)
-    Locality = StringField(max_length=50)
-    City = StringField(max_length=50)
+class Property(Document):
+    name = StringField(required=True)
+    cost = StringField(max_length=500)
+    type = StringField(max_length=50)
+    area = StringField(max_length=50)
+    locality = StringField(max_length=50)
+    city = StringField(max_length=50)
+    link=StringField(max_length=200)
