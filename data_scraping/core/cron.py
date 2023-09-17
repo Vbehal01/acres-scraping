@@ -43,7 +43,6 @@ def my_cron_job_api(req):
     record.save()
     print(record)
     return HttpResponse(json.dumps({
-        "message": "data added",
         "listing": [list_data],
         "record": {
             "total_scraped": data_count,
