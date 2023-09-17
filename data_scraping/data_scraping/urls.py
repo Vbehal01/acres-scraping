@@ -19,6 +19,6 @@ from core.cron import my_cron_job_api
 from django.urls import include, path
 
 urlpatterns = [
-    path("cron-test/", my_cron_job_api),
+    path("manual_trigger/", my_cron_job_api),
     path("admin/", admin.site.urls),
 ]
