@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-y$&e#td4!#k@((3+)uvbzfi*ku#l^)6@z3w6la=p=3cm1d!seq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['8000-vbehal01-acresscraping-2go3i0997zn.ws-us104.gitpod.io']
 
 
 # Application definition
@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'core',
     'django_crontab',
-    'data_scraping'
+    "django_apscheduler",
 ]
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 LOGGING = {
     'version': 1,
@@ -58,13 +59,7 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
             'stream': sys.stdout,
-        },
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'info.log',
-            'formatter':'file'
-        },
+        }
     },
     # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
     'loggers': {
@@ -75,11 +70,12 @@ LOGGING = {
             'propagate': True,
         },
     },
+
 }
 
-CRONJOBS = [
-    ('* * * * *', 'core.cron.my_cron_job') #This cron run every minute
-]
+SCHEDULER_AUTOSTART = True
+
+CSRF_TRUSTED_ORIGINS = ["https://8000-vbehal01-acresscraping-2go3i0997zn.ws-us104.gitpod.io"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -115,12 +111,12 @@ WSGI_APPLICATION = "data_scraping.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#        'default': {
-#            'ENGINE': 'djongo',
-#            'NAME': 'db-name',
-#        }
-#    }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 
 
 # Password validation
