@@ -14,3 +14,17 @@ class Record(Document):
     total_data_scrapped= IntField()
     already_inserted_data= IntField()
     new_inserted_data= IntField()
+# from dotenv import load_dotenv
+# import os
+
+# load_dotenv()
+
+# # connect(db=os.environ["database_name"],
+# #         host=os.environ["database_host"], 
+# #         username=os.environ["username"], 
+# #         password=os.environ["password"]
+# #         )
+# connect(
+#     db_name=os.environ["database_name"],
+#     host=os.environ["database_host"],
+#     alias='default')
