@@ -1,18 +1,15 @@
 import requests
 from bs4 import BeautifulSoup as BS
-from core.constants import FILE_PATH
-
-# FILE_PATH="core/abc3.txt"
+from core.constants import FILE_PATH, UNSCRAPPED_DATA
 
 def read_file_content(filepath: str):
     file_content=""
     with open(filepath,"r") as f:
         file_content=f.read()
-        file_content=BS(file_content, 'html.parser')
     return file_content
 
 def extract_all_listings_elements(page_html):
-    section_divs = page_html.find("div", attrs={"class":"pageComponent undefined"})
+    section_divs = page_html.find("div", attrs={"class": "pageComponent undefined"})
     section_listing_elements = section_divs.find_all("section", attrs={"data-hydration-on-demand": "true"})
     return section_listing_elements
 
@@ -21,7 +18,10 @@ def extract_name(listing_element):
     name2 = listing_element.find("a", attrs={"class": "srpTuple__dFlex"})
     name3 = listing_element.find("td", attrs={"id ": "srp_tuple_society_heading"})
     name = name1 if name1 else (name2 if name2 else name3)
-    return name.text.strip()
+    if name:
+        return name.text.strip()
+    else:
+        return name
 
 def extract_cost(listing_element):
     cost=listing_element.find("td" , attrs={"id":"srp_tuple_price"})
@@ -40,14 +40,17 @@ def extract_cost(listing_element):
         exact_cost=costs.text.lstrip()
         return exact_cost
 
-def extract_type_and_locality(listing_element):
+def extract_type(listing_element):
     listing_type=listing_element.find("h2")
     listing_type=listing_type.text.split("in")
-    listing_type=listing_type[0].strip()
-    locality=listing_type[1].split(", ")
-    locality=locality[0].strip()
-    type_locality=[listing_type, locality]
-    return type_locality
+    return listing_type[0].strip()
+
+def extract_locality(listing_element):
+    listing_locality=listing_element.find("h2")
+    listing_locality=listing_locality.text.split("in")
+    listing_locality=listing_locality[1].split(",")
+    return listing_locality[0].strip()
+
 
 def extract_area(listing_element):
     area=listing_element.find("td", attrs={"id":"srp_tuple_primary_area"})
@@ -70,24 +73,22 @@ def extract_link(listing_element):
 
 def scrap(city_key, city_code):
     scraped_listing=[]
-    url = f"https://www.99acres.com/search/property/buy/{city_key}?city={city_code}&preference=S&area_unit=1&res_com=R"
-    headers = {"User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 12871.102.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.141 Safari/537.36"}
     try:
-        # response = requests.get(url, headers=headers)
-        # if response.status_code == 200:
-        #     # html_content = response.text
-        # else:
-        #     print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
-        #     exit()
+        if(UNSCRAPPED_DATA==True):
+            page_html=read_file_content(FILE_PATH)
+        else:
+            url = f"https://www.99acres.com/search/property/buy/{city_key}?city={city_code}&preference=S&area_unit=1&res_com=R"
+            headers = {"User-Agent": "Mozilla/5.0 (X11; CrOS x86_64 12871.102.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.141 Safari/537.36"}
+            response = requests.get(url, headers=headers)
+            page_html = response.text
 
-        page_html=read_file_content(FILE_PATH)
+        page_html=BS(page_html, 'html.parser')
         listing_elements=extract_all_listings_elements(page_html)
         for listing_element in listing_elements:
             property_name=extract_name(listing_element)
             property_cost=extract_cost(listing_element)
-            type_and_locality=extract_type_and_locality(listing_element)
-            property_type=type_and_locality[0]
-            property_locality=type_and_locality[1]
+            property_type=extract_type(listing_element)
+            property_locality=extract_locality(listing_element)
             property_area=extract_area(listing_element)
             property_link=extract_link(listing_element)
 
