@@ -12,14 +12,8 @@ def my_cron_job():
     print('Hello World')
     logging.info("It's Working!")
 
-# def my_cron_job_api(req):
-#     user = User(email='aashish.gaba097@gmail.com', first_name='Aashish', last_name='Gaba')
-#     user.save()
-#     logging.info("It's Working!")
-#     return HttpResponse("message")
-
 def my_cron_job_api(req):
-    city={"hyderabad": 269, "pune": 19}
+    city={"pune": 19, "delhi": 1075722, "mumbai-all": 12, "lucknow": 205, "agra": 197, "ahmedabad-all": 45, "kolkata-all": 25, "jaipur": 177, "chennai-all": 32, "bangalore-all": 20}
     count=0
     data_count=0
     data_exist_count=0
