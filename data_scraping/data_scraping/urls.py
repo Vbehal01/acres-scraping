@@ -15,10 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from core.cron import my_cron_job_api
+from core.cron import data_scrapping
 from django.urls import include, path
 
 urlpatterns = [
-    path("manual_trigger/", my_cron_job_api),
+    path("manual_trigger/", data_scrapping),
     path("admin/", admin.site.urls),
 ]
