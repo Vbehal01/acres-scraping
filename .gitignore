@@ -4,3 +4,4 @@ __pycache__/
 **.pyc
 mongodb-data
 .env
+sql-data

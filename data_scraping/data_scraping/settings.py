@@ -26,8 +26,10 @@ SECRET_KEY = "django-insecure-y$&e#td4!#k@((3+)uvbzfi*ku#l^)6@z3w6la=p=3cm1d!seq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-vbehal01-acresscraping-2go3i0997zn.ws-us104.gitpod.io']
+ALLOWED_HOSTS = ['*']
 
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # Application definition
 
@@ -40,9 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'core',
     'django_crontab',
-    "django_apscheduler",
+    'django_celery_beat',
 ]
-APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
 LOGGING = {
     'version': 1,
@@ -73,9 +74,12 @@ LOGGING = {
 
 }
 
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
 SCHEDULER_AUTOSTART = True
 
-CSRF_TRUSTED_ORIGINS = ["https://8000-vbehal01-acresscraping-2go3i0997zn.ws-us104.gitpod.io"]
+CSRF_TRUSTED_ORIGINS = ["https://8000-vbehal01-acresscraping-6xcc45uhfrt.ws-us104.gitpod.io"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
