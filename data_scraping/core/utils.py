@@ -2,7 +2,7 @@ from mongoengine import *
 connect()
 
 class Property(Document):
-    name = StringField(required=True)
+    name = StringField(max_length=500)
     cost = StringField(max_length=500)
     type = StringField(max_length=50)
     area = StringField(max_length=50)
