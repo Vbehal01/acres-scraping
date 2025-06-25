@@ -1,15 +1,41 @@
+# import requests
+# # from bs4 import BeautifulSoup
+ 
+ 
+# # Making a GET request
+# r1 = requests.get('https://www.geeksforgeeks.org/python-programming-language/')
+# print("r1: ",r1)
+# r = requests.get('https://www.99acres.com/search/property/buy/hyderabad?city=269&preference=S&area_unit=1&res_com=R')
+ 
+# # check status code for response received
+# # success code - 200
+
+# print(r)
+
+
 import requests
-from bs4 import BeautifulSoup
-import csv
+from bs4 import BeautifulSoup as BS
 
-base_url = "https://blog.finxter.com/python-web-scraping-from-url-to-csv-in-no-time/#:~:text=Python%20CSV%20Module&text=It%20is%20simple%20and%20easy,first%2C%20import%20the%20csv%20module.&text=To%20write%20the%20scraped%20data,writerows()%20methods%20as%20required."
+url = "https://www.99acres.com/search/property/buy/hyderabad?city=269&preference=S&area_unit=1&res_com=R"
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"}
 
-with open("scraped_data.csv", "w", newline="") as csvfile:
-    csv_writer = csv.writer(csvfile)
-    csv_writer.writerow(["Data_Title", "Data_Content"])  # Header row
+try:
+    response = requests.get(url, headers=headers)
+    print(response)
+    if response.status_code == 200:
+        html_content = response.text
+    else:
+        print(f"Failed to retrieve the webpage. Status code: {response.status_code}")
+        exit()
 
-    for page_number in range(1, 6):  # Loop through page numbers 1 to 5
-        url = base_url + str(page_number)
-        response = requests.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        
+    # soup=BS(html_content, 'html.parser')
+    # section_divs = soup.find_all("div", attrs={"class":"pageComponent undefined"})
+    # print(section_divs)
+    # for div in section_divs:
+    #     data=div.find_all("class", attrs={"data-hydration-on-demand": "true"})
+    #     for i in data :
+    #         print(i)
+    #         print(i.find_all("h2", class_="srpTuple__tupleTitleOverflow"))
+    
+except requests.exceptions.RequestException as e:
+    print(f"An error occurred: {e}")
